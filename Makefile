@@ -118,6 +118,30 @@ init:             ## Initialize the project based on an application template.
 .PHONY: api
 api:              ## Run the API server.
 	@$(ENV_PREFIX)uvicorn finance.app:app --reload
+
+docker-build:            ## Build the package.
+	@echo "Building package ..."
+	@docker build  --platform=linux/amd64 --provenance=false -t serverless-taxa-fixa-api-dev .
+
+##depends-on: build-docker
+docker-login:            ## Login to the docker registry.
+	@echo "Logging in to the docker registry ..."
+	@aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 238362649227.dkr.ecr.eu-west-1.amazonaws.com
+
+docker-tag:            ## Tag the package.
+	@echo "Tagging package ..."
+	@docker tag serverless-taxa-fixa-api-dev:latest 238362649227.dkr.ecr.eu-west-1.amazonaws.com/serverless-taxa-fixa-api-dev:latest
+
+docker-push:            ## Push the package.
+	@echo "Pushing package ..."
+	@docker push 238362649227.dkr.ecr.eu-west-1.amazonaws.com/serverless-taxa-fixa-api-dev:latest
+
+serverless:
+	@echo "Deploying serverless ..."
+	@serverless deploy
+
+deploy: docker-login docker-build docker-tag docker-push serverless        ## Deploy the package.
+
 # This project has been generated from rochacbruno/python-project-template
 # __author__ = 'rochacbruno'
 # __repo__ = https://github.com/rochacbruno/python-project-template

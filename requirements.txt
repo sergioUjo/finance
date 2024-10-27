@@ -1,5 +1,8 @@
-# This template is a low-dependency template. 
-# By default there is no requirements added here.
-# Add the requirements you need to this file.
-# or run `make init` to create this file automatically based on the template.
-# You can also run `make switch-to-poetry` to use the poetry package manager.
+aiopg==1.4.0
+fastapi==0.115.2
+mangum==0.19.0
+numpy==2.1.2
+pandas==2.2.3
+PyPika==0.48.9
+QuantLib==1.36
+matplotlib==3.9.2

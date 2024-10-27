@@ -2,14 +2,19 @@ service: taxa-fixa-api
 
 provider:
   name: aws
-  runtime: python3.10
-  region: eu-west-3
-
+  runtime: python3.12  # Keeping this for reference
+  region: eu-west-1
+  ecr:
+    images:
+      appimage:
+        uri: 238362649227.dkr.ecr.eu-west-1.amazonaws.com/serverless-taxa-fixa-api-dev:latest
 functions:
   app:
-    handler: main.handler
+    image:
+      name: appimage  # Referencing the Docker image
     events:
-      - httpApi: '*'
+      - httpApi: '*'  # Catch-all route for HTTP API
+
 package:
   exclude:
     - venv/**
