@@ -115,7 +115,9 @@ switch-to-poetry: ## Switch to poetry package manager.
 init:             ## Initialize the project based on an application template.
 	@./.github/init.sh
 
-
+.PHONY: api
+api:              ## Run the API server.
+	@$(ENV_PREFIX)uvicorn finance.app:app --reload
 # This project has been generated from rochacbruno/python-project-template
 # __author__ = 'rochacbruno'
 # __repo__ = https://github.com/rochacbruno/python-project-template

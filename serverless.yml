@@ -1,0 +1,15 @@
+service: taxa-fixa-api
+
+provider:
+  name: aws
+  runtime: python3.10
+  region: eu-west-3
+
+functions:
+  app:
+    handler: main.handler
+    events:
+      - httpApi: '*'
+package:
+  exclude:
+    - venv/**
